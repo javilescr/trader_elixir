@@ -1,6 +1,7 @@
 # Websockex's readme
 defmodule Streamer.Binance do
   use WebSockex
+
   require Logger
 
   @stream_endpoint "wss://stream.binance.com:9443/ws/"
@@ -8,7 +9,11 @@ defmodule Streamer.Binance do
   def start_link(symbol) do
     symbol = String.downcase(symbol)
 
-    WebSockex.start_link("#{@stream_endpoint}#{symbol}@trade", __MODULE__, nil)
+    WebSockex.start_link(
+      "#{@stream_endpoint}#{symbol}@trade",
+      __MODULE__,
+      nil
+    )
   end
 
   def handle_frame({_type, msg}, state) do
@@ -38,5 +43,7 @@ defmodule Streamer.Binance do
       "Trade event received " <>
         "#{trade_event.symbol}@#{trade_event.price}"
     )
+
+    Naive.send_event(trade_event)
   end
 end

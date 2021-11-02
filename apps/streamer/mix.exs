@@ -18,7 +18,7 @@ defmodule Streamer.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :websockex, :jason],
+      extra_applications: [:logger, :websockex, :jason, :phoenix_pubsub],
       mod: {Streamer.Application, []}
     ]
   end
@@ -27,7 +27,8 @@ defmodule Streamer.MixProject do
   defp deps do
     [
       {:websockex, ">= 0.0.0"},
-      {:jason, ">= 0.0.0"}
+      {:jason, ">= 0.0.0"},
+      {:phoenix_pubsub, ">= 0.0.0"}
     ]
   end
 end
